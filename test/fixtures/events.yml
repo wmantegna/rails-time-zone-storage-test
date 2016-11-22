@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  start: 2016-11-22 11:22:04
+  time_zone: MyString
+
+two:
+  name: MyString
+  start: 2016-11-22 11:22:04
+  time_zone: MyString
