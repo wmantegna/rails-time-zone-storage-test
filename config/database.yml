@@ -22,4 +22,7 @@ test:
 
 production:
   <<: *default
-  database: db/production.sqlite3
+  adapter: postgresql
+  database: timezonetest_production
+  username: rails
+  password: <%= ENV['APP_DATABASE_PASSWORD'] %>
