@@ -28,7 +28,7 @@ class EventsController < ApplicationController
 
     respond_to do |format|
       if @event.save
-        format.html { redirect_to @event, notice: 'Event was successfully created.' }
+        format.html { redirect_to events_url, notice: 'Event was successfully created.' }
         format.json { render :show, status: :created, location: @event }
       else
         format.html { render :new }
@@ -40,12 +40,35 @@ class EventsController < ApplicationController
   # PATCH/PUT /events/1
   # PATCH/PUT /events/1.json
   def update
-    
-    raise
+    # # parse time_zone info
+    # timeZone = params[:event][:time_zone]
+    # zone = ActiveSupport::TimeZone[timeZone]
+    # diff = zone.formatted_offset
+
+    # # get dateTime info from UI
+    # year = params[:event]['start(1i)'].to_i
+    # month = params[:event]['start(2i)'].to_i
+    # day = params[:event]['start(3i)'].to_i
+    # hour = params[:event]['start(4i)'].to_i
+    # minute = params[:event]['start(5i)'].to_i
+    # startDate = DateTime.new(year, month, day, hour, minute)
+
+    # # Create proper DateTime string
+    # datetime_format = "%m/%d/%Y %H:%M"
+    # datetime_str = startDate.strftime(datetime_format)
+    # parsed_time = DateTime.strptime("#{datetime_str} #{diff}", "#{datetime_format} %Z")
+
+    # # sanitize params
+    # params[:event][:start] = parsed_time
+    # params[:event].delete 'start(1i)'
+    # params[:event].delete 'start(2i)'
+    # params[:event].delete 'start(3i)'
+    # params[:event].delete 'start(4i)'
+    # params[:event].delete 'start(5i)'
 
     respond_to do |format|
       if @event.update(event_params)
-        format.html { redirect_to @event, notice: 'Event was successfully updated.' }
+        format.html { redirect_to events_url, notice: 'Event was successfully updated.' }
         format.json { render :show, status: :ok, location: @event }
       else
         format.html { render :edit }
@@ -65,6 +88,12 @@ class EventsController < ApplicationController
   end
 
   private
+
+    def getDateTimeFromUi()
+
+    end
+
+
     # Use callbacks to share common setup or constraints between actions.
     def set_event
       @event = Event.find(params[:id])
