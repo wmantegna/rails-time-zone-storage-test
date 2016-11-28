@@ -5,6 +5,10 @@ class EventsController < ApplicationController
   # GET /events.json
   def index
     @events = Event.all
+
+    # Filter events based on in_time_zone date
+    @date = DateTime.new(2016, 11, 12, 12)
+    @events_filtered = @events.select {|i| i.in_time_zone >= @date }
   end
 
   # GET /events/1
@@ -25,6 +29,7 @@ class EventsController < ApplicationController
   # POST /events.json
   def create
     @event = Event.new(event_params)
+    @event.tz = @event.in_time_zone
 
     respond_to do |format|
       if @event.save
@@ -68,6 +73,9 @@ class EventsController < ApplicationController
 
     respond_to do |format|
       if @event.update(event_params)
+        @event.tz = @event.in_time_zone
+        @event.save
+
         format.html { redirect_to events_url, notice: 'Event was successfully updated.' }
         format.json { render :show, status: :ok, location: @event }
       else
