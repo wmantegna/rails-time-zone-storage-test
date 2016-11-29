@@ -33,6 +33,10 @@ class EventsController < ApplicationController
 
     respond_to do |format|
       if @event.save
+
+        @event.start = DatetimeHelper::encodeForTimeZone(@event.start, @event.time_zone)
+        @event.save
+
         format.html { redirect_to events_url, notice: 'Event was successfully created.' }
         format.json { render :show, status: :created, location: @event }
       else
