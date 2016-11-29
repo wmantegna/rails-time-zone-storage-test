@@ -34,6 +34,7 @@ class EventsController < ApplicationController
     respond_to do |format|
       if @event.save
 
+        # Encode DateTime/TimeZone properly
         @event.start = DatetimeHelper::encodeForTimeZone(@event.start, @event.time_zone)
         @event.save
 
