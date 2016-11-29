@@ -24,7 +24,6 @@ class EventsController < ApplicationController
   # GET /events/1/edit
   def edit
     @event.rewind_datetime_for_editing
-    # raise
   end
 
   # POST /events
@@ -49,7 +48,7 @@ class EventsController < ApplicationController
     respond_to do |format|
       if @event.update(event_params)
 
-        # @startDate = getDateTimeFromUi(params)
+        # Encode DateTime/TimeZone properly
         @event.start = DatetimeHelper::encodeForTimeZone(@event.start, @event.time_zone)
         @event.save
 
