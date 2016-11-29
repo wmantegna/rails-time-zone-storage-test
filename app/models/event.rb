@@ -12,12 +12,6 @@ class Event < ActiveRecord::Base
   end
 
   def self.get_after_date(date)
-    # return Event.all.select {|e| e.in_time_zone >= date }
     return Event.where("start >= ?", date)
-    # return Event.all.select {|e| 
-    #   timed = e.in_time_zone
-    #   raise
-    #   return timed >= date
-    # }
   end
 end
