@@ -17,10 +17,10 @@ gem 'bootstrap-sass', '~> 3.2.0'
 
 group :development do
   gem 'web-console', '~> 2.0'
-  gem 'spring'
 end
 group :development, :test do
-  gem 'sqlite3'
+  gem 'sqlite3'               # database
+  gem 'rspec-rails', '~> 3.5' # Unit testing library
 
   gem 'byebug'
   gem 'pry-rails'           # Causes rails console to open pry

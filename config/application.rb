@@ -22,5 +22,9 @@ module TimeZoneTest
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+
+    # 'Require' all files in lib folder (use their namespaces)
+    # config.autoload_paths += %W(#{config.root}/lib)
+    config.autoload_paths += %W(#{config.root}/lib/classes)
   end
 end

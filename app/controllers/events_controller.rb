@@ -35,7 +35,7 @@ class EventsController < ApplicationController
       if @event.save
 
         # Encode DateTime/TimeZone properly
-        @event.start = DatetimeHelper::encodeForTimeZone(@event.start, @event.time_zone)
+        @event.start = UtilsDatetime::encode_for_time_zone(@event.start.to_datetime, @event.time_zone)
         @event.save
 
         format.html { redirect_to events_url, notice: 'Event was successfully created.' }
@@ -54,7 +54,7 @@ class EventsController < ApplicationController
       if @event.update(event_params)
 
         # Encode DateTime/TimeZone properly
-        @event.start = DatetimeHelper::encodeForTimeZone(@event.start, @event.time_zone)
+        @event.start = UtilsDatetime::encode_for_time_zone(@event.start.to_datetime, @event.time_zone)
         @event.save
 
         format.html { redirect_to events_url, notice: 'Event was successfully updated.' }
