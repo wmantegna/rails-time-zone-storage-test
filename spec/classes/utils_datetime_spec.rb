@@ -51,4 +51,79 @@ describe UtilsDatetime do
       end
     end
   end
+
+  describe '.handle_daylight_savings(time)' do
+
+    #    time_to_check |     time.now    | outcome
+    #   --------------------------------------
+    #   during_dst     | during_dst      | + 1 hour
+    #   during_dst     | not_during_dst  | - 1 hour
+    #   not_during_dst | during_dst      | same
+    #   not_during_dst | not_during_dst  | same
+
+    
+    let (:during_dst) { Time.new(2017, 3, 12, 12)}
+    let (:not_during_dst) { Time.new(2017, 3, 11, 12)}
+
+    context 'During Daylight Savings' do
+      before do
+        Timecop.travel(during_dst)
+      end
+      after do
+        Timecop.return
+      end
+
+      it 'springs forward' do
+        expected = during_dst + 1.hour
+        actual = UtilsDatetime::handle_daylight_savings(during_dst)
+
+        expect(actual).to eq(expected)
+      end
+      it 'doesn\'t spring forward' do
+        expected = not_during_dst
+        actual = UtilsDatetime::handle_daylight_savings(not_during_dst)
+
+        expect(actual).to eq(expected)
+      end
+    end
+    context 'not during Daylight Savings' do
+      before do
+        Timecop.travel(not_during_dst)
+      end
+      after do
+        Timecop.return
+      end
+
+      it 'falls back' do
+        expected = during_dst - 1.hour
+        actual = UtilsDatetime::handle_daylight_savings(during_dst)
+
+        expect(actual).to eq(expected)
+      end
+      it 'doesn\'t fall back' do
+        expected = not_during_dst
+        actual = UtilsDatetime::handle_daylight_savings(not_during_dst)
+
+        expect(actual).to eq(expected)
+      end
+    end
+  end
+
+  describe '.replace_dst_time_zone_names()' do
+    def self.it_replaces(dst_name, with: non_dst_name)
+      it "it replaces #{dst_name} with #{with}" do
+
+        date_str = "2017-03-13 12:00 #{dst_name}"
+        replaced_str = UtilsDatetime::replace_dst_time_zone_names(date_str)
+
+        expect(replaced_str.index(dst_name)).to eq(nil)
+        expect(replaced_str.index(with)).to be > -1
+      end
+    end
+
+    it_replaces 'EDT', with: 'EST'
+    it_replaces 'CDT', with: 'CST'
+    it_replaces 'MDT', with: 'MST'
+    it_replaces 'PDT', with: 'PST'
+  end
 end

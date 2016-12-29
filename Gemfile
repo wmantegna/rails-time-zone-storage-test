@@ -14,6 +14,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'simple_form'
 gem 'bootstrap-sass', '~> 3.2.0'
 
+# gem 'timezone', '~> 1.0' # test
+
 
 group :development do
   gem 'web-console', '~> 2.0'
@@ -21,6 +23,7 @@ end
 group :development, :test do
   gem 'sqlite3'               # database
   gem 'rspec-rails', '~> 3.5' # Unit testing library
+  gem 'timecop'               # Helps test time-dependent with 'time travel' or 'time freezing' features
 
   gem 'byebug'
   gem 'pry-rails'           # Causes rails console to open pry

@@ -187,6 +187,7 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (2.0.5)
+    timecop (0.8.1)
     turbolinks (5.0.1)
       turbolinks-source (~> 5)
     turbolinks-source (5.0.0)
@@ -225,6 +226,7 @@ DEPENDENCIES
   sdoc (~> 0.4.0)
   simple_form
   sqlite3
+  timecop
   turbolinks
   uglifier (>= 1.3.0)
   web-console (~> 2.0)

@@ -11,8 +11,8 @@ class UtilsDatetime
   end
 
   def self.encode_time_zone(datetime, timeZoneOffset)
-    raise ArgumentError.new('datetime must be a datetime') unless datetime.is_a?(DateTime)
-    raise ArgumentError.new('timeZoneOffset must be an integer') unless timeZoneOffset.is_a?(Integer)
+    raise ArgumentError.new('datetime must be a DateTime') unless datetime.is_a?(DateTime)
+    raise ArgumentError.new('timeZoneOffset must be an Integer') unless timeZoneOffset.is_a?(Integer)
 
     # get datetime info  
     datetime_str = datetime.strftime(DATETIME_FORMAT)
@@ -32,10 +32,48 @@ class UtilsDatetime
   end
 
   def self.merge_date_and_time(date, time)
-    raise ArgumentError.new('date must be a date') unless date.is_a?(Date)
-    raise ArgumentError.new('time must be a time') unless time.is_a?(Time)
+    raise ArgumentError.new('date must be a Date') unless date.is_a?(Date)
+    raise ArgumentError.new('time must be a Time') unless time.is_a?(Time)
 
     datetime = DateTime.new(date.year, date.month, date.day, time.hour, time.min)
     return datetime
   end
+
+  def self.handle_daylight_savings(time)
+    raise ArgumentError.new('time must be a Time') unless time.is_a?(Time)
+
+    # http://stackoverflow.com/a/12065605/3205851  
+    if time.dst?
+      if Time.now.dst?
+        time = time + 1.hour
+      else
+        time = time - 1.hour
+      end
+    end
+
+    return time
+  end
+
+  def self.replace_dst_time_zone_names(str)
+    # NOTE: this needs to be replaced by updating the time-zone 'diff' 
+    # to reflect a number that stops the daylight savings time-zone name to begin with 
+    # see: encode_for_time_zone() for more info on what time-zone 'diff' is
+
+    raise ArgumentError.new('string must be a String') unless str.is_a?(String)
+
+    # dst = Daylight Savings Time
+    time_zone_names_to_replace = [
+      {non_dst: 'EST', dst: 'EDT'},
+      {non_dst: 'CST', dst: 'CDT'},
+      {non_dst: 'MST', dst: 'MDT'},
+      {non_dst: 'PST', dst: 'PDT'}
+    ]
+
+    time_zone_names_to_replace.each do |pair|
+      str.sub! pair[:dst], pair[:non_dst]
+    end
+
+    return str
+  end
+
 end
