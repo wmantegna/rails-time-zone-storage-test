@@ -8,11 +8,11 @@ class Event < ActiveRecord::Base
   def in_time_zone_str
     return self.in_time_zone.strftime(DATETIME_FORMAT)
   end
-  def handle_daylight_savings
+  def in_daylight_savings
     start_in_time_zone = UtilsDatetime::handle_daylight_savings(self.start)
     return start_in_time_zone.strftime(DATETIME_FORMAT)
   end
-  def time_zone_and_daylight_savings
+  def in_time_zone_and_daylight_savings
 
     # process & format into string
     start_in_time_zone = self.in_time_zone

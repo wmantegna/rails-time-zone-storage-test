@@ -121,9 +121,9 @@ describe UtilsDatetime do
       end
     end
 
-    it_replaces 'EDT', with: 'EST'
-    it_replaces 'CDT', with: 'CST'
-    it_replaces 'MDT', with: 'MST'
-    it_replaces 'PDT', with: 'PST'
+    it_replaces 'EDT', with: 'EST' # "Eastern Time (US & Canada)"
+    it_replaces 'CDT', with: 'CST' # "Central Time (US & Canada)"
+    it_replaces 'MDT', with: 'MST' # "Mountain Time (US & Canada)"
+    it_replaces 'PDT', with: 'PST' # "Pacific Time (US & Canada)"
   end
 end
